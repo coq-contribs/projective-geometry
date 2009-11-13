@@ -2,7 +2,7 @@
 # http://tech.motion-twin.com
 .SUFFIXES : .ml .mli .cmo .cmx .cmi .mll .mly
 
-INSTALLDIR=`ocamlc -where`
+INSTALLDIR=`$(CAMLBIN)ocamlc -where`
 CFLAGS=
 LFLAGS= -a
 LIBS=
@@ -27,19 +27,19 @@ wininstall: all opt
 
 doc:
 	mkdir doc
-	ocamldoc -sort -html -d doc xml.mli dtd.mli xmlParser.mli
+	$(CAMLBIN)ocamldoc -sort -html -d doc xml.mli dtd.mli xmlParser.mli
 
 test.exe: xml-light.cma
-	ocamlc xml-light.cma test.ml -o test.exe
+	$(CAMLBIN)ocamlc xml-light.cma test.ml -o test.exe
 	
 test_opt.exe: xml-light.cmxa
-	ocamlopt xml-light.cmxa test.ml -o test_opt.exe
+	$(CAMLBIN)ocamlopt xml-light.cmxa test.ml -o test_opt.exe
 
 xml-light.cma: xml_parser.cmo xml_lexer.cmo dtd.cmo xmlParser.cmo xml.cmo 
-	ocamlc -o xml-light.cma $(LFLAGS) $(LIBS) xml_parser.cmo xml_lexer.cmo dtd.cmo xmlParser.cmo xml.cmo
+	$(CAMLBIN)ocamlc -o xml-light.cma $(LFLAGS) $(LIBS) xml_parser.cmo xml_lexer.cmo dtd.cmo xmlParser.cmo xml.cmo
 
 xml-light.cmxa: xml_parser.cmx xml_lexer.cmx dtd.cmx xmlParser.cmx xml.cmx 
-	ocamlopt -o xml-light.cmxa $(LFLAGS) $(LIBS) xml_parser.cmx xml_lexer.cmx dtd.cmx xmlParser.cmx xml.cmx
+	$(CAMLBIN)ocamlopt -o xml-light.cmxa $(LFLAGS) $(LIBS) xml_parser.cmx xml_lexer.cmx dtd.cmx xmlParser.cmx xml.cmx
 
 dtd.cmo: xml.cmi xml_lexer.cmi dtd.cmi
 
@@ -81,17 +81,17 @@ wclean:
 
 # SUFFIXES
 .ml.cmo:
-	ocamlc $(CFLAGS) -c $<
+	$(CAMLBIN)ocamlc $(CFLAGS) -c $<
 
 .ml.cmx:
-	ocamlopt $(CFLAGS) -c $<
+	$(CAMLBIN)ocamlopt $(CFLAGS) -c $<
 
 .mli.cmi:
-	ocamlc $(CFLAGS) $<
+	$(CAMLBIN)ocamlc $(CFLAGS) $<
 
 .mll.ml:
-	ocamllex $<
+	$(CAMLBIN)ocamllex $<
 
 .mly.ml:
-	ocamlyacc $<
+	$(CAMLBIN)ocamlyacc $<
 
