@@ -5,7 +5,7 @@
 (***************************************************************************)
 
 Require Export Reals.
-Require Export general_tactics.
+Require Export ProjectiveGeometry.Space.general_tactics.
 
 Open Scope R_scope.
 

@@ -284,7 +284,7 @@ Ltac gb :=
     let p:= constr:(List.hd 0 lp1) in
     let lp:= constr:(List.rev (List.tail lp1)) in
 (* we want show lp=0 => p=0 *)
-    let t:= external "./gb/gb" "" a in 
+    let t:= external "./Plane/gb/gb" "" a in 
 (* t contains p^d, c and lc such that c*p^d = lc*lp *)
        match t with
         | lceq (Pow ?p0 ?d)  (lceq ?c ?lc) =>

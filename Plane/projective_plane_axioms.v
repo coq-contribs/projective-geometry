@@ -1,4 +1,4 @@
-Require Export general_tactics.
+Require Export ProjectiveGeometry.Plane.general_tactics.
 
 (** PreProjective plan **)
 
