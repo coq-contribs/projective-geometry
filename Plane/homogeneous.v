@@ -1,9 +1,9 @@
 Require Export Reals.
 Require Export projective_plane_axioms.
 Require Export Bool.
-Require Export field_variable_isolation_tactic.
+Require Export ProjectiveGeometry.Plane.field_variable_isolation_tactic.
 Require Export Setoid.
-Require Import ProjectivePlaneGeometry.gb.gb.
+Require Import ProjectiveGeometry.Plane.gb.gb.
 
 Open Scope R_scope.
 
