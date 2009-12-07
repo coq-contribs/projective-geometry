@@ -68,17 +68,17 @@ Hint Resolve rA'O rB'O rC'O rAO rBO rCO.
 
 Lemma l1A'B'O : rk (triple A' B' O)=3.
 Proof.
-apply l1_scheme with (A:=A) (B:=B) (A':=A') (B':=B') (O0:=O); auto.
+apply l1_scheme with (A:=A) (B:=B) (A':=A') (B':=B'); auto.
 Qed.
 
 Lemma l1A'C'O : rk (triple A' C' O)=3.
 Proof.
-apply l1_scheme with (A:=A) (B:=C) (A':=A') (B':=C') (O0:=O); auto.
+apply l1_scheme with (A:=A) (B:=C) (A':=A') (B':=C'); auto.
 Qed.
 
 Lemma l1B'C'O : rk (triple B' C' O)=3.
 Proof.
-apply l1_scheme with (A:=B) (B:=C) (A':=B') (B':=C') (O0:=O); auto.
+apply l1_scheme with (A:=B) (B:=C) (A':=B') (B':=C'); auto.
 Qed.
 
 Lemma l2rABOP : exists P:Point, rk(add P (triple A B O))>=4 /\ rk(couple O P)=2.

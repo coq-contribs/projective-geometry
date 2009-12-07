@@ -214,7 +214,7 @@ subst.
 elim (eq_point_dec b B); intro.
 rewrite a0 in *;clear a0.
 assert (rk(couple B alpha)=1).
-eapply (sublemma'' B c A  B C A beta gamma) with (O0:=O); try eassumption.
+eapply (sublemma'' B c A  B C A beta gamma) with (O:=O); try eassumption.
 setoid_replace (triple B C A) with (triple A B C) by fsetdecide_no_hyps; assumption.
 setoid_replace (triple B c A) with (triple A B c) by fsetdecide_no_hyps; assumption.
 setoid_replace (triple B C A) with (triple A B C) by fsetdecide_no_hyps.
@@ -230,7 +230,7 @@ rewrite <- (couple_rk2 B alpha); [idtac | assumption].
 setoid_replace (triple B A gamma) with (triple A B gamma) by fsetdecide_no_hyps; omega.
 (* B <> b *)
 assert (rk (couple A gamma)=1).
-eapply (sublemma c b  A C B alpha gamma beta O) ; try eassumption.
+eapply (sublemma c b  A C B alpha gamma beta O); try eassumption.
 setoid_replace (triple A C B) with (triple A B C) by fsetdecide_no_hyps; assumption.
 setoid_replace (triple C B alpha) with (triple B C alpha) by fsetdecide_no_hyps; assumption.
 setoid_replace (triple c b alpha) with (triple b c alpha) by fsetdecide_no_hyps; assumption.
@@ -241,7 +241,7 @@ apply rk_couple1; assumption.
 assert (gamma [==] beta).
 rewrite <- (couple_rk2 A beta); try assumption.
 rewrite <- (couple_rk2 A gamma); try assumption.
-trivial.
+red; auto.
 rewrite H1.
 setoid_replace (triple alpha beta beta) with (couple alpha beta) by fsetdecide_no_hyps.
 apply rk_couple_2. 
@@ -266,7 +266,7 @@ setoid_replace (triple C a beta) with (triple a C beta) by fsetdecide_no_hyps; a
 elim (eq_point_dec b B); intro.
 rewrite a0 in *;clear a0.
 assert (rk(couple B gamma)=1).
-eapply (sublemma'' B a C B A C beta alpha) with (O0:=O); try assumption; try trivial.
+eapply (sublemma'' B a C B A C beta alpha) with (O:=O); try assumption; try trivial.
 setoid_replace (triple B A C) with (triple A B C) by fsetdecide_no_hyps; assumption.
 setoid_replace (triple B a C) with (triple a B C) by fsetdecide_no_hyps; assumption.
 setoid_replace (triple B A C) with (triple A B C) by fsetdecide_no_hyps.
@@ -296,7 +296,7 @@ apply rk_couple1; auto.
 elim (eq_point_dec b B);intro.
 rewrite a0 in *;clear a0.
 assert (rk(couple B alpha)=1).
-eapply (sublemma a c B A C beta alpha gamma) with (O0:= O); try assumption.
+eapply (sublemma a c B A C beta alpha gamma) with (O:= O); try assumption.
 setoid_replace (triple B A C) with (triple A B C) by fsetdecide_no_hyps; assumption.
 setoid_replace (triple B A gamma) with (triple A B gamma) by fsetdecide_no_hyps; assumption.
 setoid_replace (triple B a c) with (triple a B c) by fsetdecide_no_hyps; assumption.
@@ -304,7 +304,7 @@ setoid_replace (triple B A C) with (triple A B C) by fsetdecide_no_hyps.
 setoid_replace (triple B a c) with (triple a B c) by fsetdecide_no_hyps; assumption.
 setoid_replace (triple B a gamma) with (triple a B gamma) by fsetdecide_no_hyps; assumption.
 assert (rk(couple B gamma)=1).
-eapply (sublemma c a B C A beta gamma alpha) with (O0:=O); try assumption.
+eapply (sublemma c a B C A beta gamma alpha) with (O:=O); try assumption.
 setoid_replace (triple B C A) with (triple A B C) by fsetdecide_no_hyps; assumption.
 setoid_replace (triple B A gamma) with (triple A B gamma) by fsetdecide_no_hyps; assumption.
 setoid_replace (triple C A beta) with (triple A C beta) by fsetdecide_no_hyps; assumption.

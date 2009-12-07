@@ -682,6 +682,11 @@ setoid_replace (add x (union A B))  with (union (add x A) (add x B)) by fsetdeci
 omega.
 Qed.
 
+Lemma matroid3' :
+ forall X y z, rk (add y X) = rk (add z X) -> rk (add z X) = rk X -> rk X =
+  rk (union X (couple y z)).
+Proof. exact matroid3'. Qed.
+
 Lemma construction : 
  forall n , forall E, rk E = n -> n<=3 -> exists P, rk (add P E) = n+1.
 Proof.
@@ -716,7 +721,7 @@ elim H1;intro;[idtac|firstorder];clear H1.
 elim H3;intro;[idtac|firstorder];clear H3.
 elim H4;intro;[idtac|firstorder];clear H4.
 assert (rk E = rk (union E (couple P0 P1))).
-eapply matroid3';unfold Matroid'.rk;congruence.
+eapply matroid3'; congruence.
 
 rewrite H2 in H4.
 assert (rk (couple P0 P1) <= rk  (union E (couple P0 P1))).
@@ -746,10 +751,10 @@ elim H3;intro;[idtac|firstorder];clear H3.
 elim H2;intro;[idtac|firstorder];clear H2.
 elim H4;intro;[idtac|firstorder];clear H4.
 assert (rk E = rk (union E (couple P0 P1))).
-eapply matroid3';unfold Matroid'.rk;congruence.
+eapply matroid3'; congruence.
 
 assert (rk E = rk (union E (couple P2 P3))).
-apply matroid3';unfold Matroid'.rk;congruence.
+apply matroid3'; congruence.
 
 assert (rk (union E (union (couple P0 P1) (couple P2 P3))) =rk E).
 apply (matroid3'_gen E (couple P0 P1) (couple P2 P3));symmetry;auto.
@@ -779,10 +784,10 @@ elim H3;intro;[idtac|firstorder];clear H3.
 elim H4;intro;[idtac|firstorder];clear H4.
 
 assert (rk E = rk (union E (couple P0 P1))).
-eapply matroid3';unfold Matroid'.rk;congruence.
+eapply matroid3'; congruence.
 
 assert (rk E = rk (union E (couple P2 P3))).
-apply matroid3';unfold Matroid'.rk;congruence.
+apply matroid3'; congruence.
 
 assert (rk (union E (union (couple P0 P1) (couple P2 P3))) =rk E).
 apply (matroid3'_gen E (couple P0 P1) (couple P2 P3));symmetry;auto.
@@ -812,10 +817,10 @@ elim H3;intro;[idtac|firstorder];clear H3.
 elim H4;intro;[idtac|firstorder];clear H4.
 
 assert (rk E = rk (union E (couple P0 P1))).
-apply matroid3';unfold Matroid'.rk;congruence.
+apply matroid3'; congruence.
 
 assert (rk E = rk (union E (couple P2 P3))).
-apply matroid3';unfold Matroid'.rk;congruence.
+apply matroid3'; congruence.
 
 assert (rk (union E (union (couple P0 P1) (couple P2 P3))) =rk E).
 apply (matroid3'_gen E (couple P0 P1) (couple P2 P3));symmetry;auto.

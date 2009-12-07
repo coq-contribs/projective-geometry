@@ -3,7 +3,7 @@ Require Export FSets.
 (** This module takes a decidable type and 
 build finite sets of this type, tactics and defs *)
 
-Module BuildFSets (DecPoints: FSetInterface.WS ).
+Module Type BuildFSets (DecPoints: FSetInterface.WS ).
 
 Module Export FiniteSetsOfPoints := FSetWeakList.Make DecPoints.
 Module Export FiniteSetsOfPointsProperties := WProperties FiniteSetsOfPoints.

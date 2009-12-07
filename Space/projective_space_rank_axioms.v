@@ -3,7 +3,7 @@ Require Export matroids_axioms.
 
 Module Type RankProjectiveSpace (DecPoints: FSetInterface.WS).
 
-Module Export FiniteSetsDefs := BuildFSets DecPoints.
+Declare Module Export FiniteSetsDefs : BuildFSets DecPoints.
 
 Definition set_of_points := t.
 Definition Point := DecPoints.t.

@@ -4,7 +4,7 @@ Require Export sets_of_points.
 
 Module Type Matroid (DecPoints: FSetInterface.WS).
 
-Module Export FiniteSetsDefs := BuildFSets DecPoints (* DecPoints *).
+Declare Module Export FiniteSetsDefs : BuildFSets DecPoints (* DecPoints *).
 
 (** The rank of a set of points *)
 Parameter rk : set_of_points -> nat.
@@ -28,7 +28,7 @@ End Matroid.
 
 Module Type Matroid' (DecPoints: FSetInterface.WS).
 
-Module Export FiniteSetsDefs := BuildFSets DecPoints.
+Declare Module Export FiniteSetsDefs : BuildFSets DecPoints.
 
 (** The rank of a set of points *)
 (** alternative definition *)

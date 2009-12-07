@@ -67,7 +67,6 @@ rewrite a in *.
 exists P1;auto.
 intuition.
 exists P0;auto.
-intuition.
 Qed.
 
 Definition line_eq l m := rk (quadruple (fstP l) (sndP l) (fstP m) (sndP m)) = 2.
@@ -135,9 +134,9 @@ rewrite a in *; clear a.
 setoid_replace (triple B C B) with (couple C B) by (clear_all;fsetdecide).
 split.
 apply rk_couple1.
-auto.
+unfold "[==]" in *; auto.
 apply rk_couple1.
-auto.
+unfold "[==]" in *; auto.
 exists (Cline A B b).
 unfold Incid.
 simpl.
