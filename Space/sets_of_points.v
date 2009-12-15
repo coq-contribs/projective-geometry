@@ -8,7 +8,7 @@ Module BuildFSets (DecPoints: FSetInterface.WS ).
 Module Export FiniteSetsOfPoints := FSetWeakList.Make DecPoints.
 Module Export FiniteSetsOfPointsProperties := WProperties FiniteSetsOfPoints.
 Module Export Dec := WDecide FiniteSetsOfPoints.
-Module Export FM := Dec.F.
+Export Dec.F.
 
 Lemma test_fsetdec : forall X x,
 In x X ->
