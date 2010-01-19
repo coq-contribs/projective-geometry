@@ -6,6 +6,7 @@ Plane/projective_plane_axioms.v
 Plane/decidability.v
 Plane/field_variable_isolation_tactic.v
 Plane/flat.v
+Plane/moulton.v
 Plane/pg25.v
 Plane/gb/gbtypes.v
 Plane/gb/gb.v
