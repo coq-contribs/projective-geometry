@@ -120,6 +120,7 @@ VFILES:=Plane/back.v\
   Plane/P12_aeolian.v\
   Plane/P14_pseudo_midpoint.v\
   Plane/hexamys.v\
+  Plane/hexamys_desargues.v\
   Plane/fano_plane.v\
   Plane/fano_plane_desargues.v\
   Plane/Heyting_projective_plane_axioms.v\
