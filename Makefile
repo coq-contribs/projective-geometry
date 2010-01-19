@@ -35,8 +35,7 @@ CAMLP4LIB:=$(shell $(CAMLP4BIN)$(CAMLP4) -where)
 #                        #
 ##########################
 
-OCAMLLIBS:=-I Plane/gb\
-  -I Plane/gb/ocaml/xml-light
+OCAMLLIBS:=
 COQSRCLIBS:=-I $(COQLIB)/kernel -I $(COQLIB)/lib \
   -I $(COQLIB)/library -I $(COQLIB)/parsing \
   -I $(COQLIB)/pretyping -I $(COQLIB)/interp \
@@ -128,7 +127,6 @@ VFILES:=Plane/back.v\
   Plane/Heyting_projective_plane_axioms.v\
   Plane/projective_plane_to_Heyting_projective_plane.v\
   Plane/projective_plane_duality.v\
-  Plane/gb/gbtypes.v\
   Space/desargues3Dlemmas.v\
   Space/matroids_axioms.v\
   Space/matroid_to_matroid_p.v\
@@ -155,19 +153,8 @@ VIFILES:=$(VFILES:.v=.vi)
 GFILES:=$(VFILES:.v=.g)
 HTMLFILES:=$(VFILES:.v=.html)
 GHTMLFILES:=$(VFILES:.v=.g.html)
-MLFILES:=Plane/gb/entiers.ml\
-  Plane/gb/utile.ml\
-  Plane/gb/polynomes2.ml\
-  Plane/gb/dansideal.ml
-CMOFILES:=$(MLFILES:.ml=.cmo)
-CMIFILES:=$(MLFILES:.ml=.cmi)
-CMXFILES:=$(MLFILES:.ml=.cmx)
-CMXSFILES:=$(MLFILES:.ml=.cmxs)
-OFILES:=$(MLFILES:.ml=.o)
 
-all: $(VOFILES) $(CMOFILES) $(CMXSFILES) Plane/gb/ocaml/xml-light/xml-light.cma\
-  Plane/gb/gb\
-  Plane/gb/gb.vo Plane/gb/gb.glob
+all: $(VOFILES) 
 spec: $(VIFILES)
 
 gallina: $(GFILES)
@@ -194,21 +181,6 @@ all-gal.pdf: $(VFILES)
 
 
 
-###################
-#                 #
-# Custom targets. #
-#                 #
-###################
-
-Plane/gb/ocaml/xml-light/xml-light.cma: 
-	cd Plane/gb/ocaml/xml-light; make all; cd ../../..
-
-Plane/gb/gb: Plane/gb/entiers.cmo Plane/gb/polynomes2.cmo Plane/gb/utile.cmo Plane/gb/dansideal.cmo Plane/gb/ocaml/xml-light/xml-light.cma
-	$(CAMLBIN)ocamlc -rectypes $(ZDEBUG) $(ZFLAGS) -o Plane/gb/gb unix.cma nums.cma xml-light.cma  Plane/gb/utile.cmo Plane/gb/entiers.cmo Plane/gb/polynomes2.cmo Plane/gb/dansideal.cmo Plane/gb/gb.ml
-
-Plane/gb/gb.vo Plane/gb/gb.glob: Plane/gb/gb.v Plane/gb/gbtypes.vo Plane/gb/gb
-	$(COQC) -dump-glob Plane/gb/gb.glob $(COQDEBUG) $(COQFLAGS) $<
-
 ####################
 #                  #
 # Special targets. #
@@ -216,30 +188,6 @@ Plane/gb/gb.vo Plane/gb/gb.glob: Plane/gb/gb.v Plane/gb/gbtypes.vo Plane/gb/gb
 ####################
 
 .PHONY: all opt byte archclean clean install depend html
-
-%.cmi: %.mli
-	$(CAMLC) $(ZDEBUG) $(ZFLAGS) $<
-
-%.cmo: %.ml
-	$(CAMLC) $(ZDEBUG) $(ZFLAGS) $(PP) $<
-
-%.cmx: %.ml
-	$(CAMLOPTC) $(ZDEBUG) $(ZFLAGS) $(PP) $<
-
-%.cmxs: %.ml
-	$(CAMLOPTLINK) $(ZDEBUG) $(ZFLAGS) -shared -o $@ $(PP) $<
-
-%.cmo: %.ml4
-	$(CAMLC) $(ZDEBUG) $(ZFLAGS) $(PP) -impl $<
-
-%.cmx: %.ml4
-	$(CAMLOPTC) $(ZDEBUG) $(ZFLAGS) $(PP) -impl $<
-
-%.cmxs: %.ml4
-	$(CAMLOPTLINK) $(ZDEBUG) $(ZFLAGS) -shared -o $@ $(PP) -impl $<
-
-%.ml.d: %.ml
-	$(CAMLBIN)ocamldep -slash $(OCAMLLIBS) $(PP) "$<" > "$@"
 
 %.vo %.glob: %.v
 	$(COQC) $(COQDEBUG) $(COQFLAGS) $*
@@ -277,27 +225,11 @@ install:
 	 install -d `dirname $(COQLIB)/user-contrib/ProjectiveGeometry/$$i`; \
 	 install $$i $(COQLIB)/user-contrib/ProjectiveGeometry/$$i; \
 	 done)
-	(for i in $(CMOFILES); do \
-	 install -d `dirname $(COQLIB)/user-contrib/ProjectiveGeometry/$$i`; \
-	 install $$i $(COQLIB)/user-contrib/ProjectiveGeometry/$$i; \
-	 done)
-	(for i in $(CMIFILES); do \
-	 install -d `dirname $(COQLIB)/user-contrib/ProjectiveGeometry/$$i`; \
-	 install $$i $(COQLIB)/user-contrib/ProjectiveGeometry/$$i; \
-	 done)
-	(for i in $(CMXSFILES); do \
-	 install -d `dirname $(COQLIB)/user-contrib/ProjectiveGeometry/$$i`; \
-	 install $$i $(COQLIB)/user-contrib/ProjectiveGeometry/$$i; \
-	 done)
 
 clean:
 	rm -f $(CMOFILES) $(CMIFILES) $(CMXFILES) $(CMXSFILES) $(OFILES) $(VOFILES) $(VIFILES) $(GFILES) $(MLFILES:.ml=.cmo) $(MLFILES:.ml=.cmx) *~
 	rm -f all.ps all-gal.ps all.pdf all-gal.pdf all.glob $(VFILES:.v=.glob) $(HTMLFILES) $(GHTMLFILES) $(VFILES:.v=.tex) $(VFILES:.v=.g.tex) $(VFILES:.v=.v.d)
-	rm -f $(CMOFILES) $(MLFILES:.ml=.cmi) $(MLFILES:.ml=.ml.d) $(MLFILES:.ml=.cmx) $(MLFILES:.ml=.o)
 	- rm -rf html
-	- rm -f Plane/gb/ocaml/xml-light/xml-light.cma
-	- rm -f Plane/gb/gb
-	- rm -f Plane/gb/gb.vo Plane/gb/gb.glob
 
 archclean:
 	rm -f *.cmx *.o
@@ -315,9 +247,6 @@ Makefile: Make
 
 -include $(VFILES:.v=.v.d)
 .SECONDARY: $(VFILES:.v=.v.d)
-
--include $(MLFILES:.ml=.ml.d)
-.SECONDARY: $(MLFILES:.ml=.ml.d)
 
 # WARNING
 #
