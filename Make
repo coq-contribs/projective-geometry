@@ -16,6 +16,16 @@ Plane/projective_plane_inst.v
 Plane/homogeneous.v
 Plane/bij.v
 Plane/examples.v
+Plane/P05_almost_pappus.v
+Plane/P06_angle_line.v
+Plane/P07_cevian_lines.v
+Plane/P08_cevian_lines_2.v
+Plane/P09_complete_quadrilateral.v
+Plane/P10_complete_quadrilateral_2.v
+Plane/P11_chasles.v
+Plane/P12_aeolian.v
+Plane/P14_pseudo_midpoint.v
+Plane/hexamys.v
 Plane/fano_plane.v
 Plane/fano_plane_desargues.v
 Plane/Heyting_projective_plane_axioms.v

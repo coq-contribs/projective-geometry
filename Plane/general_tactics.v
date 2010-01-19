@@ -4,41 +4,6 @@
 (* LIX/INRIA FUTURS 2004-2008                                                     *)
 (***************************************************************************)
 
-Ltac rewrite_all H := 
- match type of H with
- | ?t1 = ?t2 => 
-   let rec aux H :=
-     match goal with
-     | id : context [t1] |- _ => 
-       match type of id with 
-       | t1 = t2 => fail 1 
-       | _ => revert id; try aux H; intro id
-       end
-     | _ => try rewrite H
-     end in
-   aux H
- end.
-
-Ltac rewrite_all_inv H := 
- match type of H with
- | ?t1 = ?t2 => 
-   let rec aux H :=
-     match goal with
-     | id : context [t2] |- _ => 
-       match type of id with 
-       | t1 = t2 => fail 1 
-       | _ => revert id; try aux H; intro id
-       end
-     | _ => try rewrite <- H
-     end in
-   aux H
- end.
-
-Ltac replace_all term1 term2 :=
-let Hn := fresh in 
- (cut (term2=term1);[intro Hn;rewrite <- Hn;rewrite_all_inv Hn; clear Hn|idtac]).
-
-
 Ltac ExistHyp t := match goal with
                    | H1:t |- _ => idtac
                    end.
@@ -59,9 +24,7 @@ Ltac not_exist_hyp t := match goal with
 Ltac assert_if_not_exist H :=
   not_exist_hyp H;assert H.
 
-
 Ltac suppose t := cut t;[intro|idtac].
-
 
 Ltac DecompEx H P := elim H;intro P;intro;clear H.
 
@@ -75,10 +38,29 @@ Ltac DecompAndAll :=
    | H:(?X1 /\ ?X2) |- _ => decompose [and] H;clear H
 end.
 
-Definition dist3 (S:Set) (A B C  : S) : Prop := A <> B /\ A <> C /\ B <> C. 
+Ltac use H := decompose [and ex] H; clear H.
+
+Ltac use_all := repeat match goal with
+| H: ?A /\ ?B  |- _ => use H
+| H: ex ?P |- _ => use H
+end.
+
+Definition dist3 (S:Set) (A B C  : S) : Prop := 
+  A <> B /\ A <> C /\ 
+  B <> C. 
 
 Definition dist4 (S:Set) (A B C D :S) : Prop := 
-  A <> B /\ A <> C /\ A <> D /\ B <> C /\ B <> D /\ C <> D. 
+  A <> B /\ A <> C /\ A <> D /\ 
+  B <> C /\ B <> D /\ 
+  C <> D. 
+
+Definition dist6 (S:Set) (A B C D E F : S) := 
+  A<>B /\ A<>C /\ A<>D /\ A<>E /\ A<>F /\
+  B<>C /\ B<>D /\ B<>E /\ B<>F /\
+  C<>D /\ C<>E /\ C<>F /\
+  D<>E /\ D<>F /\
+  E<>F.
 
 Implicit Arguments dist3.
 Implicit Arguments dist4.
+Implicit Arguments dist6.
