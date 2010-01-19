@@ -103,8 +103,6 @@ VFILES:=Plane/back.v\
   Plane/flat.v\
   Plane/moulton.v\
   Plane/pg25.v\
-  Plane/gb/gbtypes.v\
-  Plane/gb/gb.v\
   Plane/general_tactics.v\
   Plane/forth.v\
   Plane/basic_facts_plane.v\
