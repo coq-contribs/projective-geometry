@@ -1055,13 +1055,6 @@ case_eq B;intros;
 case_eq l;intros;
 case_eq m;intros;
 unfold_all;subst;normalize_prop; trivial; try (solve [nsatzR]).
-
-simplify_eqs H0 H3 H1 H2;IsoleVar r4 H3;subst;nsatzR.
-simplify_eqs H2 H0 H3 H1;nsatzR.
-simplify_eqs H2 H0 H3 H1;nsatzR.
-simplify_eqs H2 H0 H3 H1;nsatzR.
-simplify_eqs H2 H0 H3 H1;nsatzR.
-
 Qed.
 
 End HomogenousCoords.
