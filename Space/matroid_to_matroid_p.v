@@ -3,8 +3,8 @@ Require Export matroids_axioms.
 (** A functor to go from Matroid to Matroid' *)
 
 Module matroid_to_matroid' (DecPoints: FSetInterface.WS) (M: Matroid DecPoints) : Matroid' DecPoints
-with Module FiniteSetsDefs := M.FiniteSetsDefs
-with Definition rk:=M.rk.
+  with Module FiniteSetsDefs := M.FiniteSetsDefs 
+  with Definition rk:=M.rk.
 
 Export M.
 

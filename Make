@@ -1,14 +1,11 @@
 -R . ProjectiveGeometry
--I Plane/gb
--I Plane/gb/ocaml/xml-light
 Plane/back.v
 Plane/projective_plane_axioms.v
 Plane/decidability.v
 Plane/field_variable_isolation_tactic.v
 Plane/flat.v
 Plane/pg25.v
-Plane/gb/gbtypes.v
-Plane/gb/gb.v
+Plane/moulton.v
 Plane/general_tactics.v
 Plane/forth.v
 Plane/basic_facts_plane.v
@@ -21,14 +18,6 @@ Plane/fano_plane_desargues.v
 Plane/Heyting_projective_plane_axioms.v
 Plane/projective_plane_to_Heyting_projective_plane.v
 Plane/projective_plane_duality.v
--custom "cd Plane/gb/ocaml/xml-light; make all; cd ../../.." "" "Plane/gb/ocaml/xml-light/xml-light.cma"
-Plane/gb/entiers.ml
-Plane/gb/utile.ml
-Plane/gb/polynomes2.ml
-Plane/gb/dansideal.ml
--custom "$(CAMLBIN)ocamlc -rectypes $(ZDEBUG) $(ZFLAGS) -o Plane/gb/gb unix.cma nums.cma xml-light.cma  Plane/gb/utile.cmo Plane/gb/entiers.cmo Plane/gb/polynomes2.cmo Plane/gb/dansideal.cmo Plane/gb/gb.ml" "Plane/gb/entiers.cmo Plane/gb/polynomes2.cmo Plane/gb/utile.cmo Plane/gb/dansideal.cmo Plane/gb/ocaml/xml-light/xml-light.cma" "Plane/gb/gb"
-Plane/gb/gbtypes.v
--custom "$(COQC) -dump-glob Plane/gb/gb.glob $(COQDEBUG) $(COQFLAGS) $<" "Plane/gb/gb.v Plane/gb/gbtypes.vo Plane/gb/gb" "Plane/gb/gb.vo Plane/gb/gb.glob"
 Space/desargues3Dlemmas.v
 Space/matroids_axioms.v
 Space/matroid_to_matroid_p.v
