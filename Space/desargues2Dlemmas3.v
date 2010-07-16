@@ -61,6 +61,7 @@ Lemma beta_ok' : forall
 (rabc3 : rk (triple a b c) = 3), 
 rk (triple a c beta) = 2.
 Proof.
+
 intros.
 assert (rk(union (triple a c A) (couple C beta))=3).
 assert (rk(add c (triple A C a)) = 3).
@@ -127,11 +128,10 @@ assert (rk(union (add c (triple A' C' a)) (triple o A a))>=rk(add o (triple A' A
 apply matroid2; fsetdecide_no_hyps.
 assert (rk(add o (triple A' A C'))>=4).
 setoid_replace (triple A' A C')  with  (triple A' C' A) by fsetdecide_no_hyps.
-eapply rA'C'Mo; try eassumption.
-intuition.
+eapply (rA'C'Mo A' B' C' A B C);try eassumption || intuition.
 assert (rk (inter (add c (triple A' C' a)) (triple o A a)) >= rk(singleton a)).
 apply matroid2; fsetdecide_no_hyps.
-rewrite rk_singleton in H2.
+rewrite rk_singleton in H2. 
 omega.
 apply le_antisym.
 generalize (matroid3 (add c (triple A' C' a)) (triple A' C' beta)).
@@ -152,7 +152,9 @@ assert (rk
   (union (union (triple a c A) (couple C beta))
      (union (triple a c A') (couple C' beta)))>=4).
 assert (rk(add a (triple A A' C))>=4).
-generalize (rABCa A' B' C' A B C O rABC rABCA'B'C'O rACO rBCO rAA'O rAA' P rABOP o rko1 rko2 a Ha2 Ha2'); intros rABCa'.
+generalize (rABCa A' B' C' A B C O rABC rA'B'C' rABCA'B'C'O 
+            rABO rACO rBCO rA'B'O' rA'C'O' rB'C'O' rAA'O rBB'O rCC'O rAA' 
+            rBB' rCC' P rABOP rOP o rko1 rko2  rko3 a Ha2 Ha2'); intros rABCa'.
 setoid_replace (triple A A' C) with (triple A' A C) by fsetdecide_no_hyps. 
 apply (rk3_4 B A C A' a).
 apply le_antisym.

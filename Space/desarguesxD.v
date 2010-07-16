@@ -71,8 +71,6 @@ Qed.
 
 End desargues_theorem.
 
-Check Desargues_xD.
-
 Lemma Desargues_xD'
      : forall A' B' C' A B C O0 : Point,
        rk (triple A B C) = 3 ->
