@@ -3,7 +3,7 @@ Require Export projective_plane_axioms.
 Require Export Bool.
 Require Export ProjectiveGeometry.Plane.field_variable_isolation_tactic.
 Require Export Setoid.
-Require Export NsatzR.
+Require Export Nsatz.
 
 Open Scope R_scope.
 
@@ -1054,7 +1054,7 @@ case_eq A;intros;
 case_eq B;intros;
 case_eq l;intros;
 case_eq m;intros;
-unfold_all;subst;normalize_prop; trivial; try (solve [nsatzR]).
+unfold_all;subst;normalize_prop; trivial; try (solve [nsatz]).
 Qed.
 
 End HomogenousCoords.

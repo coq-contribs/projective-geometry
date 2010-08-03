@@ -1,12 +1,12 @@
 -R . ProjectiveGeometry
+general_tactics.v
+field_variable_isolation_tactic.v
 Plane/back.v
 Plane/projective_plane_axioms.v
 Plane/decidability.v
-Plane/field_variable_isolation_tactic.v
 Plane/flat.v
 Plane/moulton.v
 Plane/pg25.v
-Plane/general_tactics.v
 Plane/forth.v
 Plane/basic_facts_plane.v
 Plane/projective_plane_inst.v
@@ -38,10 +38,8 @@ Space/sets_of_points.v
 Space/rank_properties.v
 Space/desargues2Dlemmas3.v
 Space/desargues3Dspecial.v
-Space/field_variable_isolation_tactic.v
 Space/projective_space_rank_to_projective_space.v
 Space/desargues2Dmore.v
-Space/general_tactics.v
 Space/desarguesxD.v
 Space/basic_facts.v
 Space/matroids_properties.v

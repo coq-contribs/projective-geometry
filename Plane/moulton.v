@@ -4,7 +4,7 @@ Require Export Bool.
 Require Export field_variable_isolation_tactic.
 Require Export Setoid.
 Require Export Fourier.
-Require Export NsatzR.
+Require Export Nsatz.
 
 Open Scope R_scope.
 
@@ -664,7 +664,6 @@ elim (R_pos_neg ((b2-b1)/(2*m1-2*m2))).
 intros Ha.
 cut False.
 intros Hf; elim Hf.
-Check hint6.
 eapply (hint6 b1 b2 m1 m2); auto.
 intros Hb0. 
 exists (P ((b2-b1)/(2*m1-2*m2)) (2*m1*(b2-b1)/(2*m1-2*m2)+b1)).
@@ -929,7 +928,7 @@ m1 = m2 /\ b1 = b2.
 Proof.
 intros.
 split;
-nsatzR.
+nsatz.
 Qed.
 
 Lemma sys_eqs_2 : forall xa ya xb yb m1 m2 b1 b2, 
@@ -942,7 +941,7 @@ yb = 2*m1 * xb + b1 ->
 m1 = m2 /\ b1 = b2.
 Proof.
 intros.
-split; nsatzR.
+split; nsatz.
 Qed.
 
 
@@ -966,10 +965,10 @@ IsoleVar b1 H2.
 IsoleVar b1 H0.
 rewrite H2 in H0; clear H2.
 rewrite H1 in H; clear H1.
-assert (yb-ya=(2*xb-xa)*m2) by nsatzR.
+assert (yb-ya=(2*xb-xa)*m2) by nsatz.
 assert (yb-ya=(xb-xa)*m1).
 clear a.
-nsatzR.
+nsatz.
 rewrite H1 in H2; clear H1.
 assert (xb-xa>0) by fourier.
 assert (2*xb-xa >0) by fourier.
@@ -1003,12 +1002,12 @@ assert (ya-yb=2*m2*(xa-xb)).
 IsoleVar b2 H3.
 IsoleVar b2 H2.
 rewrite H2 in H3.
-nsatzR.
+nsatz.
 assert (ya-yb=m1*(xa-xb)).
 IsoleVar b1 H1.
 IsoleVar b1 H0.
 rewrite H1 in H0.
-nsatzR.
+nsatz.
 rewrite H in H4.
 assert (2*m2=m1).
 replace (2*m2) with ((2*m2*(xa-xb))/(xa-xb)) by (field; auto with real).
@@ -1075,7 +1074,7 @@ cut (m1=m2 /\ b1=b2).
 intuition;subst;auto.
 assert (2*m1=2*m2/\b1=b2).
 eapply (sys_eqs_1 xa ya xb yb (2*m1)) ; auto.
-elim H; intros H'1 H'2; split; [nsatzR | trivial].
+elim H; intros H'1 H'2; split; [nsatz | trivial].
 
 intros.
 assert False.
@@ -1152,17 +1151,17 @@ repeat elim R_pos_neg; try (solve [intros;subst;intuition | intros;subst;fourier
 intros; subst.
 
 rewrite b0 in *; right.
-assert (r1=r2) by nsatzR.
+assert (r1=r2) by nsatz.
 apply f_equal; auto.
 intros; subst.
-assert (r1=r2) by nsatzR.
+assert (r1=r2) by nsatz.
 right.
 apply f_equal2; auto.
 apply f_equal; auto.
 intros; subst.
 rewrite b2 in *.
 intros; subst.
-assert (r1=r2) by nsatzR.
+assert (r1=r2) by nsatz.
 right; apply f_equal2; auto.
 
 intros; subst; unfold Incid in *; simpl in *; solve [intuition].
@@ -1183,17 +1182,17 @@ repeat elim R_pos_neg; try (solve[intros;subst;intuition | intros;subst;fourier]
 intros; subst.
 rewrite b0 in *.
 assert (r1=r2).
-clear b0; nsatzR.
+clear b0; nsatz.
 right; apply f_equal2; auto.
 intros; subst.
 rewrite b1 in *.
 assert (r1=r2).
-clear b1; nsatzR.
+clear b1; nsatz.
 right; apply f_equal2; auto.
 intros; subst.
 rewrite b2 in *.
 assert (r1=r2).
-clear b2; nsatzR.
+clear b2; nsatz.
 right; apply f_equal2; auto.
 
 intros; subst; unfold Incid in *; simpl in *;solve[ intuition].
