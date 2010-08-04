@@ -918,6 +918,16 @@ ring_simplify in H.
 intuition.
 Qed.
 
+Lemma not_eq_prod : forall a b, 
+ a<>0 -> 
+ a*b=0 -> 
+ b=0.
+Proof.
+intros.
+rewrite  <- equiv_or in H0.
+intuition.
+Qed.
+
 Lemma sys_eqs_1 : forall xa ya xb yb m1 m2 b1 b2, 
 xa <> xb ->
 ya = m2 * xa + b2 ->
@@ -927,8 +937,15 @@ yb = m1 * xb + b1 ->
 m1 = m2 /\ b1 = b2.
 Proof.
 intros.
-split;
-nsatz.
+split.
+assert ((xa-xb)*(m1-m2)=0) by nsatz.
+assert (m1-m2=0).
+apply not_eq_prod with (a:=xa-xb);auto with real.
+auto with real.
+assert ((xa-xb)*(b1-b2)=0) by nsatz.
+assert (b1-b2=0).
+apply not_eq_prod with (a:=xa-xb);auto with real.
+auto with real.
 Qed.
 
 Lemma sys_eqs_2 : forall xa ya xb yb m1 m2 b1 b2, 
@@ -941,9 +958,25 @@ yb = 2*m1 * xb + b1 ->
 m1 = m2 /\ b1 = b2.
 Proof.
 intros.
-split; nsatz.
-Qed.
+split.
+assert ((xa-xb)*(xa-2*xb)*(m1-m2)=0) by nsatz.
+rewrite  <- equiv_or in H5.
+rewrite  <- equiv_or in H5.
+decompose [or] H5.
+assert (xa=xb) by auto with real.
+subst;intuition.
+intuition.
+auto with real.
 
+assert ((xa-xb)*(xa-2*xb)*(b1-b2)=0) by nsatz.
+rewrite  <- equiv_or in H5.
+rewrite  <- equiv_or in H5.
+decompose [or] H5.
+assert (xa=xb) by auto with real.
+subst;intuition.
+intuition.
+auto with real.
+Qed.
 
 Lemma sys_eqs_3 : forall xa ya xb yb m1 m2 b1 b2
 (a : xa <> xb)

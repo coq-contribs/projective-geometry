@@ -1,7 +1,7 @@
 Require Export Reals.
 Require Export projective_plane_axioms.
 Require Export Bool.
-Require Export ProjectiveGeometry.Plane.field_variable_isolation_tactic.
+Require Export field_variable_isolation_tactic.
 Require Export Setoid.
 Require Export Nsatz.
 
