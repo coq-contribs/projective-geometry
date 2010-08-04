@@ -1054,7 +1054,8 @@ case_eq A;intros;
 case_eq B;intros;
 case_eq l;intros;
 case_eq m;intros;
-unfold_all;subst;normalize_prop; trivial; try (solve [nsatz]).
+unfold_all;subst;normalize_prop; trivial; 
+ try (solve [nsatz]);assert (1=0) by nsatz;intuition.
 Qed.
 
 End HomogenousCoords.
