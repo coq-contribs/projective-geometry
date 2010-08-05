@@ -4,7 +4,7 @@ Require Export Bool.
 Require Export field_variable_isolation_tactic.
 Require Export Setoid.
 Require Export Fourier.
-Require Export NsatzR.
+Require Export Nsatz.
 
 Open Scope R_scope.
 
@@ -216,13 +216,11 @@ intros b1 b2 m1 m2 Hm1 Hm2 Ha Hb.
 assert ((b2-b1)<=0).
 replace (b2-b1) with ((m1-m2)*((b2-b1)/(m1-m2))) by (field;auto with real).
 replace 0 with ((m1-m2) * 0)  by field.
-SearchPattern (Rle (_ * _) _).
 apply Rmult_le_compat_neg_l.
 fourier.
 auto with real.
 assert (b2-b1>0).
 replace (b2 - b1) with ((2*m1-m2)*((b2 - b1) / (2 * m1 - m2)) ) by (field; auto with real).
-SearchPattern (Rgt (_ * _) _).
 replace 0 with ( (2*m1-m2) * 0) by field.
 apply Rmult_lt_gt_compat_neg_l.
 fourier.
@@ -248,7 +246,6 @@ replace ((b2-b1)/(2*m1 - 2*m2)) with (((b2-b1)/(m1-m2))/2) in Ha.
 assert ((b2 - b1) / (m1 - m2) <0).
 replace ((b2 - b1) / (m1 - m2)) with (2* ((b2 - b1) / (m1 - m2) /2) ) by (field; auto with real).
 replace 0 with (2 * 0) by field.
-SearchPattern (Rlt (_ * _) _).
 apply Rmult_lt_compat_l.
 fourier.
 assumption.
@@ -262,7 +259,6 @@ apply Rlt_dichotomy_converse.
 elim (R_pos_neg (m1-m2)).
 left.
 replace 0 with (2 * 0) by field.
-SearchPattern (Rlt ( _ * _) _).
 apply Rmult_lt_compat_l.
 fourier.
 assumption.
@@ -282,7 +278,6 @@ auto with real.
 intros Hm1m2'.
 right.
 replace 0 with (2 * 0) by field.
-SearchPattern (Rgt (_ * _) _).
 apply Rmult_gt_compat_l.
 fourier.
 assumption.
@@ -298,7 +293,6 @@ intros.
 replace (2*m1-2*m2) with (2*(m1-m2)) by field.
 assert ((m1-m2)<>0).
 auto with real.
-SearchPattern (_ <> _).
 apply Rmult_integral_contrapositive_currified.
 discrR.
 assumption.
@@ -670,7 +664,6 @@ elim (R_pos_neg ((b2-b1)/(2*m1-2*m2))).
 intros Ha.
 cut False.
 intros Hf; elim Hf.
-Check hint6.
 eapply (hint6 b1 b2 m1 m2); auto.
 intros Hb0. 
 exists (P ((b2-b1)/(2*m1-2*m2)) (2*m1*(b2-b1)/(2*m1-2*m2)+b1)).
@@ -925,6 +918,16 @@ ring_simplify in H.
 intuition.
 Qed.
 
+Lemma not_eq_prod : forall a b, 
+ a<>0 -> 
+ a*b=0 -> 
+ b=0.
+Proof.
+intros.
+rewrite  <- equiv_or in H0.
+intuition.
+Qed.
+
 Lemma sys_eqs_1 : forall xa ya xb yb m1 m2 b1 b2, 
 xa <> xb ->
 ya = m2 * xa + b2 ->
@@ -934,8 +937,15 @@ yb = m1 * xb + b1 ->
 m1 = m2 /\ b1 = b2.
 Proof.
 intros.
-split;
-nsatz.
+split.
+assert ((xa-xb)*(m1-m2)=0) by nsatz.
+assert (m1-m2=0).
+apply not_eq_prod with (a:=xa-xb);auto with real.
+auto with real.
+assert ((xa-xb)*(b1-b2)=0) by nsatz.
+assert (b1-b2=0).
+apply not_eq_prod with (a:=xa-xb);auto with real.
+auto with real.
 Qed.
 
 Lemma sys_eqs_2 : forall xa ya xb yb m1 m2 b1 b2, 
@@ -948,9 +958,25 @@ yb = 2*m1 * xb + b1 ->
 m1 = m2 /\ b1 = b2.
 Proof.
 intros.
-split; nsatz.
-Qed.
+split.
+assert ((xa-xb)*(xa-2*xb)*(m1-m2)=0) by nsatz.
+rewrite  <- equiv_or in H5.
+rewrite  <- equiv_or in H5.
+decompose [or] H5.
+assert (xa=xb) by auto with real.
+subst;intuition.
+intuition.
+auto with real.
 
+assert ((xa-xb)*(xa-2*xb)*(b1-b2)=0) by nsatz.
+rewrite  <- equiv_or in H5.
+rewrite  <- equiv_or in H5.
+decompose [or] H5.
+assert (xa=xb) by auto with real.
+subst;intuition.
+intuition.
+auto with real.
+Qed.
 
 Lemma sys_eqs_3 : forall xa ya xb yb m1 m2 b1 b2
 (a : xa <> xb)
@@ -987,7 +1013,6 @@ replace  (- m2 * (2 * xb - xa) ) with  (-( (2 * xb - xa)*m2)) in H4 by field.
 replace (-m2*0) with (0*0) in H4 by field.
 rewrite H2 in H4.
 replace  (- ((xb - xa) * m1)) with ((xb-xa)*(-m1)) in H4 by field.
-SearchPattern (_ < _).
 eapply (Rmult_lt_reg_l (xb-xa)).
 fourier.
 fourier.
