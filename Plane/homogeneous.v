@@ -1046,6 +1046,20 @@ Ltac simplify_eqs eq1 eq2 eq3 eq4 :=
   ring_simplify in eq3;try subst;
   ring_simplify in eq4;try subst.
 
+(** NB : The following proof takes ages with the new proof engine.
+  Probably something to see with the high number of goals, evars(?)
+  and/or setoid_replace(?). While I investigate the matter, let's
+  temporary try to speed-up the coq bench by commenting the original
+  proof and replacing it by a faster one.
+
+  Nota: some other files are currently slower than earlier, but
+  not by a 10x factor, I'll inspect them later.
+
+  Pierre Letouzey, 10/12/2010
+*)
+
+(* ORIGINAL PROOF:
+
 Lemma uniqueness : forall A B :Point, forall l m : Line,
  Incid A l -> Incid B l  -> Incid A m -> Incid B m -> A=B\/l=m.
 Proof.
@@ -1056,6 +1070,95 @@ case_eq l;intros;
 case_eq m;intros;
 unfold_all;subst;normalize_prop; trivial; 
  try (solve [nsatz]);assert (1=0) by nsatz;intuition.
+Qed.
+
+*)
+
+Lemma triple_of_point_carac : forall A,
+ let '(a,b,c) := triple_of_point A in
+ (c=1 \/ c=0) /\
+ (c=1 \/ b=1 \/ b=0) /\
+ (c=1 \/ b=1 \/ a=1).
+Proof.
+ destruct A; simpl; intuition.
+Qed.
+
+Lemma triple_of_point_carac' : forall A,
+ let '(a,b,c) := triple_of_point A in
+ (c-1)*c=0 /\
+ (c-1)*(b-1)*b=0 /\
+ (c-1)*(b-1)*(a-1)=0.
+Proof.
+ intros A.
+ generalize (triple_of_point_carac A).
+ destruct triple_of_point as ((a,b),c).
+ rewrite <- !equiv_or, <- !equiv_eq. intuition.
+Qed.
+
+Lemma triple_of_line_carac : forall l,
+ let '(a,b,c) := triple_of_line l in
+ (c=1 \/ c=0) /\
+ (c=1 \/ b=1 \/ b=0) /\
+ (c=1 \/ b=1 \/ a=1).
+Proof.
+ destruct l; simpl; intuition.
+Qed.
+
+Lemma triple_of_line_carac' : forall l,
+ let '(a,b,c) := triple_of_line l in
+ (c-1)*c=0 /\
+ (c-1)*(b-1)*b=0 /\
+ (c-1)*(b-1)*(a-1)=0.
+Proof.
+ intros l.
+ generalize (triple_of_line_carac l).
+ destruct triple_of_line as ((a,b),c).
+ rewrite <- !equiv_or, <- !equiv_eq. intuition.
+Qed.
+
+Lemma pair_eq : forall A B (a a':A)(b b':B),
+ (a,b) = (a',b') <-> a=a' /\ b=b'.
+Proof.
+ intros.
+ split. injection 1; split; trivial.
+ destruct 1; subst; trivial.
+Qed.
+
+Lemma triple_of_point_inj : forall A B,
+ triple_of_point A = triple_of_point B <-> A = B.
+Proof.
+ intros. split; intros.
+ rewrite <- (triple_point A), <- (triple_point B). now f_equal.
+ now subst.
+Qed.
+
+Lemma triple_of_line_inj : forall l m,
+ triple_of_line l = triple_of_line m <-> l = m.
+Proof.
+ destruct l, m; unfold_all; simpl; rewrite !pair_eq;
+  intuition; subst; try congruence; exfalso; auto with real.
+Qed.
+
+Lemma uniqueness : forall A B :Point, forall l m : Line,
+ Incid A l -> Incid B l  -> Incid A m -> Incid B m -> A=B\/l=m.
+Proof.
+intros A B l m. intros.
+unfold Incid in *.
+rewrite <- triple_of_point_inj, <- triple_of_line_inj.
+generalize (triple_of_point_carac' A)(triple_of_point_carac' B)
+ (triple_of_line_carac' l)(triple_of_line_carac' m).
+destruct (triple_of_point A) as ((a1,a2),a3).
+destruct (triple_of_point B) as ((b1,b2),b3).
+destruct (triple_of_line l) as ((l1,l2),l3).
+destruct (triple_of_line m) as ((m1,m2),m3).
+intros (EQa3 & EQa2 & EQa1).
+intros (EQb3 & EQb2 & EQb1).
+intros (EQl3 & EQl2 & EQl1).
+intros (EQm3 & EQm2 & EQm1).
+unfold_all.
+rewrite !pair_eq.
+normalize_prop.
+nsatz.
 Qed.
 
 End HomogenousCoords.
