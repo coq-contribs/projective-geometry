@@ -883,7 +883,7 @@ match goal with
 | H: _ |- context [?X = ?Y] => replace_cons X Y
 | H: _ |- context [?X = 0 /\ ?Y=0] => setoid_replace (X = 0 /\ Y=0) with (X*X + Y*Y = 0) by apply equiv_and
 | H: _ |- context [?X = 0 \/ ?Y=0] => setoid_replace (X = 0 \/ Y=0) with (X*Y = 0) by apply equiv_or
-| H :_ |- context [(Some ?m1 = Some ?m2)/\?r3=?r4] => 
+| H :_ |- context [(Some ?m1 = Some ?m2)/\?r3 = ?r4] => 
    setoid_replace (Some m1 = Some m2 /\ r3 = r4) with (m1=m2/\ r3=r4) 
    by let Ha := fresh in let Hb := fresh in 
         (split; [ intros (Ha,Hb); inversion Ha; solve [solve [intuition]] | intros (Ha,Hb); rewrite Ha; solve [intuition] ])
