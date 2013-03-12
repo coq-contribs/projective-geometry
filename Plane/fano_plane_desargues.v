@@ -2,15 +2,15 @@ Require Export projective_plane_axioms.
 
 Module Type fano_plane.
 
-Variable Point:Set.
+Parameter Point:Set.
 
-Variables A B C D E F G : Point.
+Parameters A B C D E F G : Point.
 
-Variable Line: Set.
+Parameter Line: Set.
 
-Variables ABF  BCD  CAE  ADG  BEG  CFG  DEF : Line.
+Parameters ABF  BCD  CAE  ADG  BEG  CFG  DEF : Line.
 
-Variable Incid : Point -> Line -> Prop.
+Parameter Incid : Point -> Line -> Prop.
 
 Axiom is_only_7_pts : forall P:Point, {P=A}+{P=B}+{P=C}+{P=D}+{P=E}+{P=F}+{P=G}.
 
