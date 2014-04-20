@@ -32,7 +32,7 @@ not_eq x12 x10.
 not_eq lLQ x11.
 not_eq x3 x11.
 not_eq lLQ lHN.
-not_eq lPQ lMN.
+not_eq A B.
 not_eq x8 x7.
 
 collapse.
