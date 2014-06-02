@@ -134,7 +134,6 @@ not_eq l0 l3.
 not_eq Q C.
 
 not_eq II Q.
-not_eq l10 l9.
 
 not_eq O Q.
 not_eq l2 l3.
