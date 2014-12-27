@@ -1,4 +1,5 @@
 Require Export projective_space_axioms.
+Require Setoid.
 
 (* We derive some lemmas needed to show decidability of equality *)
 (*
@@ -268,7 +269,7 @@ apply DecPoints.eq_sym.
 assumption.
 Qed.
 
-Require Export Setoid.
+Export Setoid.
 
 Add Parametric Relation : (Point) (DecPoints.eq)
   reflexivity proved by DecPoints.eq_refl

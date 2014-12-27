@@ -1,4 +1,5 @@
 Require Export rank_properties.
+Require Classical.
 
 
 Module Desargues3DLemmas (DecPoints: FSetInterface.WS) (M: RankProjectiveSpace DecPoints).
@@ -211,7 +212,7 @@ rewrite H1 in H0.
 omega.
 Qed.
 
-Require Export Classical.
+Export Classical.
 (* TODO remove classical left *)
 
 Lemma a_not_gamma_scheme : forall

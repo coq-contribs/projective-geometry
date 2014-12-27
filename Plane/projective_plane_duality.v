@@ -1,4 +1,5 @@
 Require Export decidability.
+Require back.
 
 (** Duality **)
 
@@ -27,7 +28,7 @@ apply M'.uniqueness; assumption.
 intuition.
 Qed.
 
-Require Export back.
+Export back.
 Module M := back.back M'.
 Module ProjectivePlaneFacts_m := decidability.decidability M.
 
