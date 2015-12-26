@@ -143,8 +143,6 @@ unfold out.
 intros.
 unfold Apart.
 intuition.
-subst B.
-intuition.
 Qed.
 
 End ProjectivePlane2HeytingProjectivePlane.

@@ -1183,16 +1183,13 @@ intros r3 Hr3 r4 Hr4 r5 Hr5; repeat elim R_eq_dec; try (solve [intros;subst;intu
 repeat elim R_pos_neg; try (solve [intros;subst;intuition | intros;subst;fourier]).
 intros; subst.
 
-rewrite b0 in *; right.
+right.
 assert (r1=r2) by nsatz.
 apply f_equal; auto.
 intros; subst.
 assert (r1=r2) by nsatz.
 right.
 apply f_equal2; auto.
-apply f_equal; auto.
-intros; subst.
-rewrite b2 in *.
 intros; subst.
 assert (r1=r2) by nsatz.
 right; apply f_equal2; auto.
@@ -1213,19 +1210,16 @@ intros r3 Hr3 r4 Hr4 r5 Hr5.
 repeat elim R_eq_dec; try (solve[intros;subst;intuition | intros;subst;fourier]) .
 repeat elim R_pos_neg; try (solve[intros;subst;intuition | intros;subst;fourier]) .
 intros; subst.
-rewrite b0 in *.
 assert (r1=r2).
-clear b0; nsatz.
+nsatz.
 right; apply f_equal2; auto.
 intros; subst.
-rewrite b1 in *.
 assert (r1=r2).
-clear b1; nsatz.
+nsatz.
 right; apply f_equal2; auto.
 intros; subst.
-rewrite b2 in *.
 assert (r1=r2).
-clear b2; nsatz.
+nsatz.
 right; apply f_equal2; auto.
 
 intros; subst; unfold Incid in *; simpl in *;solve[ intuition].
