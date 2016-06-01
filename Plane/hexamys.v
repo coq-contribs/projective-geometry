@@ -1098,6 +1098,7 @@ Qed.
 
 (* This theorem shows that Pappus property implies the Hexamys property *)
 
+Unset Regular Subst Tactic.
 
 Lemma hexamy_prop: pappus_strong -> forall A B C D E F,
  (line C D) <> (line A F) -> 
