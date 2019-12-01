@@ -12,7 +12,7 @@ Definition bij (A B:Type)(f:A->B) : Prop := inj A B f /\ surj A B f.
 
 Definition line_as_set_of_points (l:Line) := {x:Point | Incid x l}.
 
-Implicit Arguments bij [ A B ].
+Arguments bij [ A B ].
 
 Export AbstractProjectivePlane.
 Export AbstractProjectivePlane'.

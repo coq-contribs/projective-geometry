@@ -3,8 +3,8 @@ Require Export projective_plane_inst.
 Require Export Classical.
 Require Export Ensembles.
 
-Implicit Arguments  Included.
-Implicit Arguments In.
+Arguments  Included : default implicits.
+Arguments In : default implicits.
 
 
 Export AbstractProjectivePlane.

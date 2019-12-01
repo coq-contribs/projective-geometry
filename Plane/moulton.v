@@ -4,6 +4,7 @@ Require Export Bool.
 Require Export field_variable_isolation_tactic.
 Require Export Setoid.
 Require Export Fourier.
+Require Export Lra.
 Require Export Nsatz.
 
 Open Scope R_scope.
@@ -153,9 +154,9 @@ apply Rlt_dichotomy_converse.
 right.
 assert (0 + 0 < 2 * xB + - xA).
 apply (Rplus_lt_compat 0 (2*xB) 0 (-xA)).
-fourier.
-fourier.
-fourier.
+lra.
+lra.
+lra.
 Qed.
 
 Lemma hint1 : forall m1 m2, m1<0 -> m2>=0 -> m1-m2<>0.
@@ -164,8 +165,8 @@ intros.
 apply Rlt_dichotomy_converse.
 left.
 assert (m1+0<0+m2).
-apply (Rplus_lt_le_compat m1 0 0 m2); fourier .
-fourier.
+apply (Rplus_lt_le_compat m1 0 0 m2); lra .
+lra.
 Qed.
 
 Lemma hint2 : forall m1 m2, m1<0 -> m2>=0 -> 2*m1-m2<>0.
@@ -174,8 +175,8 @@ intros.
 apply Rlt_dichotomy_converse.
 left.
 assert (2*m1+0<0+m2).
-apply (Rplus_lt_le_compat (2*m1) 0 0 m2); fourier .
-fourier.
+apply (Rplus_lt_le_compat (2*m1) 0 0 m2); lra .
+lra.
 Qed.
 
 Lemma hint2' : forall m1 m2, m1<0 -> m2>=0 -> m1-2*m2<>0.
@@ -184,8 +185,8 @@ intros.
 apply Rlt_dichotomy_converse.
 left.
 assert (2*m1+0<0+m2).
-apply (Rplus_lt_le_compat (2*m1) 0 0 m2); fourier .
-fourier.
+apply (Rplus_lt_le_compat (2*m1) 0 0 m2); lra .
+lra.
 Qed.
 
 Lemma hint2'' : forall m1 m2, m2<=0 -> m1>0 -> m1-2*m2<>0.
@@ -193,7 +194,7 @@ Proof.
 intros.
 apply Rlt_dichotomy_converse.
 right.
-fourier.
+lra.
 Qed.
 
 Lemma hint3 : forall m1 m2, m1<0 -> m2>=0 -> 2*m1-2*m2<>0.
@@ -202,8 +203,8 @@ intros.
 apply Rlt_dichotomy_converse.
 left.
 assert (2*m1+0<0+2*m2).
-apply (Rplus_lt_le_compat (2*m1) 0 0 (2*m2)); fourier .
-fourier.
+apply (Rplus_lt_le_compat (2*m1) 0 0 (2*m2)); lra .
+lra.
 Qed.
 
 Hint Resolve hint0 hint1 hint2 hint2' hint2'' hint3 : real .
@@ -217,15 +218,15 @@ assert ((b2-b1)<=0).
 replace (b2-b1) with ((m1-m2)*((b2-b1)/(m1-m2))) by (field;auto with real).
 replace 0 with ((m1-m2) * 0)  by field.
 apply Rmult_le_compat_neg_l.
-fourier.
+lra.
 auto with real.
 assert (b2-b1>0).
 replace (b2 - b1) with ((2*m1-m2)*((b2 - b1) / (2 * m1 - m2)) ) by (field; auto with real).
 replace 0 with ( (2*m1-m2) * 0) by field.
 apply Rmult_lt_gt_compat_neg_l.
-fourier.
+lra.
 assumption.
-fourier.
+lra.
 Qed.
 
 Hint Resolve hint4 : real.
@@ -233,7 +234,7 @@ Hint Resolve hint4 : real.
 Lemma hint5 : forall x, x<0 -> x>=0 -> False.
 Proof.
 intros.
-fourier.
+lra.
 Qed.
 
 Hint Resolve hint5 : real.
@@ -247,7 +248,7 @@ assert ((b2 - b1) / (m1 - m2) <0).
 replace ((b2 - b1) / (m1 - m2)) with (2* ((b2 - b1) / (m1 - m2) /2) ) by (field; auto with real).
 replace 0 with (2 * 0) by field.
 apply Rmult_lt_compat_l.
-fourier.
+lra.
 assumption.
 eauto with real.
 field.
@@ -260,7 +261,7 @@ elim (R_pos_neg (m1-m2)).
 left.
 replace 0 with (2 * 0) by field.
 apply Rmult_lt_compat_l.
-fourier.
+lra.
 assumption.
 intros.
 elim (strict_or_not (m1-m2) b).
@@ -279,7 +280,7 @@ intros Hm1m2'.
 right.
 replace 0 with (2 * 0) by field.
 apply Rmult_gt_compat_l.
-fourier.
+lra.
 assumption.
 auto.
 Qed.
@@ -325,13 +326,13 @@ case (R_pos_neg xA).
 intros HxA'.
 case (R_pos_neg xB).
 intros HxB''.
-fourier.
+lra.
 intros HxB''.
 split.
 unfold m;rewrite HxB' in *; field; auto with real.
 unfold m; rewrite HxB' in *; field; auto with real.
-intros; fourier.
-intros; fourier.
+intros; lra.
+intros; lra.
 (* xB > 0 *)
 intros HxB'.
 pose (m' := (((2*yA*xB-yB*xA)/(2*xB-xA))-yA)/(-xA)).
@@ -344,7 +345,7 @@ case (R_pos_neg xA).
 intros HxA'.
 case (R_pos_neg xB).
 intros HxB''.
-fourier.
+lra.
 intros HxB''.
 (* m' < 0 *)
 case (R_pos_neg m').
@@ -363,15 +364,15 @@ intros Hm''.
 assert (m'<0).
 assert (((2 * yA * xB - yB * xA) / (2 * xB - xA) - yA) <0).
 apply (Rmult_lt_reg_l (2*xB-xA)).
-fourier.
+lra.
 replace ((2 * xB - xA) * 0) with 0 by field.
 replace ((2 * xB - xA) * ((2 * yA * xB - yB * xA) / (2 * xB - xA) - yA))
 with ((-xA)*(yB-yA)) by (field; auto with real).
 replace 0 with ((-xA)*0) by field.
 apply Rmult_lt_compat_l.
-fourier.
+lra.
 assert (0<xB-xA).
-fourier.
+lra.
 unfold b,m,m' in *.
 assert ((xB - xA) * ((yB - yA) / (xB - xA)) < (xB - xA) * 0 ).
 apply (Rmult_lt_compat_l (xB-xA) ((yB-yA)/(xB-xA)) 0); auto.
@@ -383,15 +384,15 @@ field.
 auto with real.
 unfold m'.
 apply  (Rmult_lt_reg_l (-xA)).
-fourier.
+lra.
 replace (- xA * (((2 * yA * xB - yB * xA) / (2 * xB - xA) - yA) / - xA)) with
 ((2 * yA * xB - yB * xA) / (2 * xB - xA) - yA) by 
 (field; split; [auto with real | auto with real]).
 replace (-xA * 0) with 0 by field.
 assumption.
-fourier.
-intros; fourier.
-intros; fourier.
+lra.
+intros; lra.
+intros; lra.
 Qed.
 
 Lemma sub_lemma2 : forall (xA : R) (yA : R) (o : option R), {l : Line | Incid (P xA yA) l /\ Incid (dir o) l}.
@@ -410,9 +411,9 @@ split.
 elim (R_pos_neg xA).
 intros HxA'.
 field.
-intros; fourier.
+intros; lra.
 elim (R_eq_dec r r); intuition.
-intros; fourier.
+intros; lra.
 exists (L (Some r) (yA-2*r*xA)).
 simpl.
 elim (R_pos_neg r).
@@ -420,16 +421,16 @@ intros Hr'.
 split.
 elim (R_pos_neg xA).
 intros HxA'.
-intros; fourier.
+intros; lra.
 intros; field.
 elim (R_eq_dec r r); intuition.
-intros; fourier.
+intros; lra.
 intros Hr'.
 exists (L (Some r) (yA-r*xA)).
 simpl.
 elim (R_pos_neg r).
 intros Hr''.
-intros; fourier.
+intros; lra.
 intros.
 split.
 field.
@@ -469,9 +470,9 @@ unfold b,m in *.
 field; assumption.
 unfold b,m in *.
 field; assumption.
-intros; fourier.
-intros; fourier.
-intros; fourier.
+intros; lra.
+intros; lra.
+intros; lra.
 (* xA <0 and xB >=0 *)
 intros HxB.
 apply sub_lemma1; auto.
@@ -495,20 +496,20 @@ simpl.
 case (R_pos_neg (m/2)).
 intros Hm2.
 case (R_pos_neg xA).
-intros; fourier.
+intros; lra.
 intros HxA'.
 case (R_pos_neg xB).
-intros; fourier.
+intros; lra.
 intros HxB'.
 split; unfold m in *;field; auto.
-intros; fourier.
+intros; lra.
 (* m >= 0 *)
 intros Hm.
 pose (b:= yB - m*xB).
 exists (L (Some m) b).
 simpl.
 case (R_pos_neg m).
-intros; fourier.
+intros; lra.
 intros Hm'.
 unfold b,m in *.
 split.
@@ -545,14 +546,14 @@ intros H'.
 split.
 field;auto with real.
 elim (R_pos_neg m2).
-intros; fourier.
+intros; lra.
 intros Hm2'.
 field; auto with real.
 intros.
 cut False.
 intros Hf; elim Hf.
 eauto with real.
-intros; fourier.
+intros; lra.
 intros.
 elim (R_pos_neg ((b2-b1)/(2*m1-m2))).
 intros Ha.
@@ -573,11 +574,11 @@ intros.
 split.
 field; auto with real.
 elim (R_pos_neg m2).
-intros; fourier.
+intros; lra.
 intros Hm2'.
 field.
 auto with real.
-intros;fourier.
+intros;lra.
 Qed.
 
 Lemma sub_lemma4 : forall (b1 : R)(b2 : R)(m1 : R),
@@ -597,23 +598,23 @@ intros Hm1'.
 elim (R_pos_neg b2).
 intros Hb2'.
 split; field.
-intros; fourier.
-intros; fourier.
+intros; lra.
+intros; lra.
 intros Hb2.
 exists (P b2 (2*m1*b2+b1)).
 simpl.
 elim (R_pos_neg m1).
 intros Hm1'.
 elim (R_pos_neg b2).
-intros; fourier.
+intros; lra.
 intros Hb2'.
 split; field.
-intros; fourier.
+intros; lra.
 intros Hm1.
 exists (P b2 (m1*b2+b1)).
 simpl.
 elim (R_pos_neg m1).
-intros; fourier.
+intros; lra.
 intros Hm1'.
 elim (R_pos_neg b2).
 intros Hb2'.
@@ -652,12 +653,12 @@ field; auto with real.
 elim (R_pos_neg m2).
 intros Hm2'.
 field; auto with real.
-intros; fourier.
+intros; lra.
 intros.
 cut False.
 intros Hf; elim Hf.
 eauto with real.
-intros; fourier.
+intros; lra.
 
 intros Hm.
 elim (R_pos_neg ((b2-b1)/(2*m1-2*m2))).
@@ -681,8 +682,8 @@ field; auto with real.
 elim (R_pos_neg m2).
 intros Hm2'.
 field; auto with real.
-intros; fourier.
-intros; fourier.
+intros; lra.
+intros; lra.
 intros Hm1m2.
 subst m2.
 exists (dir(Some m1)).
@@ -705,12 +706,12 @@ intros Hm1m2.
 exists (P ((b2-b1)/(m1-m2)) (m1*((b2-b1)/(m1-m2))+b1)).
 simpl.
 elim (R_pos_neg m1).
-intros Hm1'; fourier.
+intros Hm1'; lra.
 intros Hm1'.
 split.
 field;auto with real.
 elim (R_pos_neg m2).
-intros; fourier.
+intros; lra.
 intros Hm2'.
 field; auto with real.
 intros Hm1m2.
@@ -770,16 +771,16 @@ intro;injection H; intros; assert (-1<>1) by discrR; intuition.
 case (R_pos_neg m).
 intros Hm'.
 case (R_pos_neg 0).
-intros; fourier.
+intros; lra.
 intros.
 case (R_pos_neg (-1)).
 intros.
 case (R_pos_neg 1).
-intros; fourier.
+intros; lra.
 intros.
 repeat split; field.
-intros; fourier.
-intros; fourier. 
+intros; lra.
+intros; lra. 
 
 intros Hm.
 exists  (P 0 b).
@@ -793,7 +794,7 @@ intro;injection H; intuition.
 intro;injection H; intuition.
 intro;injection H; intros; assert (-1<>1) by discrR; intuition.
 case (R_pos_neg m).
-intros; fourier.
+intros; lra.
 intros Hm'.
 repeat split; field.
 intros b.
@@ -1003,20 +1004,20 @@ assert (yb-ya=(xb-xa)*m1).
 clear a.
 nsatz.
 rewrite H1 in H2; clear H1.
-assert (xb-xa>0) by fourier.
-assert (2*xb-xa >0) by fourier.
+assert (xb-xa>0) by lra.
+assert (2*xb-xa >0) by lra.
 assert ( (-m2)*(2 * xb - xa)  > (-m2)*0).
 apply Rmult_lt_compat_l.
-fourier.
-fourier.
+lra.
+lra.
 replace  (- m2 * (2 * xb - xa) ) with  (-( (2 * xb - xa)*m2)) in H4 by field. 
 replace (-m2*0) with (0*0) in H4 by field.
 rewrite H2 in H4.
 replace  (- ((xb - xa) * m1)) with ((xb-xa)*(-m1)) in H4 by field.
 eapply (Rmult_lt_reg_l (xb-xa)).
-fourier.
-fourier.
-fourier.
+lra.
+lra.
+lra.
 Qed.
 
 Lemma sys_eqs_4 : forall xa ya xb yb m1 m2 b1 b2
@@ -1046,8 +1047,8 @@ assert (2*m2=m1).
 replace (2*m2) with ((2*m2*(xa-xb))/(xa-xb)) by (field; auto with real).
 replace m1 with (m1 * (xa - xb)/(xa-xb)) by (field; auto with real).
 rewrite H4; auto.
-intros; fourier.
-intros; fourier.
+intros; lra.
+intros; lra.
 Qed.
 
 Lemma uniqueness : forall A B :Point, forall l m : Line,
@@ -1152,21 +1153,21 @@ intros b3.
 right.
 subst xa.
 generalize H2 H0 H1 H3; clear H2 H0 H1 H3.
-repeat (elim R_pos_neg) ; try (solve [intros;subst;intuition | intros;subst;fourier]).
+repeat (elim R_pos_neg) ; try (solve [intros;subst;intuition | intros;subst;lra]).
 
 intros; subst; left; auto.
 
 subst.
 generalize H2 H0 H3 H1; clear H2 H0 H3 H1.
 simpl.
-repeat elim R_pos_neg ; try (solve [intros;subst;intuition | intros;subst;fourier]).
+repeat elim R_pos_neg ; try (solve [intros;subst;intuition | intros;subst;lra]).
 
 subst.
 generalize H2 H0 H3 H1; clear H2 H0 H3 H1.
 simpl.
-repeat elim R_pos_neg; case o0 ; try (solve [intros; subst; intuition | intros; subst;fourier]).
-intros r5; repeat elim R_pos_neg; try (solve [intros; subst; intuition | intros; subst;fourier]).
-intros r5; elim R_pos_neg; try (solve [intros; subst; intuition | intros; subst;fourier]).
+repeat elim R_pos_neg; case o0 ; try (solve [intros; subst; intuition | intros; subst;lra]).
+intros r5; repeat elim R_pos_neg; try (solve [intros; subst; intuition | intros; subst;lra]).
+intros r5; elim R_pos_neg; try (solve [intros; subst; intuition | intros; subst;lra]).
 
 intros; subst.
 unfold Incid in *; simpl; intuition.
@@ -1178,9 +1179,9 @@ intros; subst.
 unfold Incid in *; simpl.
 generalize H2 H0 H3 H1; clear H2 H0 H3 H1.
 case_eq o1; case_eq o0; case_eq o; try (solve[intuition]).
-intros r3 Hr3 r4 Hr4 r5 Hr5; repeat elim R_eq_dec; try (solve [intros;subst;intuition | intros;subst;fourier]).
+intros r3 Hr3 r4 Hr4 r5 Hr5; repeat elim R_eq_dec; try (solve [intros;subst;intuition | intros;subst;lra]).
 
-repeat elim R_pos_neg; try (solve [intros;subst;intuition | intros;subst;fourier]).
+repeat elim R_pos_neg; try (solve [intros;subst;intuition | intros;subst;lra]).
 intros; subst.
 
 right.
@@ -1200,15 +1201,15 @@ intros; subst; unfold Incid in *; simpl in *; solve [intuition].
 
 intros; subst; unfold Incid in *; simpl in *.
 generalize H2 H0 H3 H1; clear H2 H0 H3 H1.
-case_eq o0; case_eq o; try (solve[intros;subst;intuition | intros;subst;fourier]).
+case_eq o0; case_eq o; try (solve[intros;subst;intuition | intros;subst;lra]).
 intros; subst.
 
 intros; subst; unfold Incid in *; simpl in *.
 generalize H2 H0 H3 H1; clear H2 H0 H3 H1.
-case_eq o; case_eq o1;  case_eq o0; try (solve[intros;subst;intuition | intros;subst;fourier]).
+case_eq o; case_eq o1;  case_eq o0; try (solve[intros;subst;intuition | intros;subst;lra]).
 intros r3 Hr3 r4 Hr4 r5 Hr5.
-repeat elim R_eq_dec; try (solve[intros;subst;intuition | intros;subst;fourier]) .
-repeat elim R_pos_neg; try (solve[intros;subst;intuition | intros;subst;fourier]) .
+repeat elim R_eq_dec; try (solve[intros;subst;intuition | intros;subst;lra]) .
+repeat elim R_pos_neg; try (solve[intros;subst;intuition | intros;subst;lra]) .
 intros; subst.
 assert (r1=r2).
 nsatz.
@@ -1229,15 +1230,15 @@ intros; subst; unfold Incid in *; simpl in *; solve [intuition].
 intros; subst.
 unfold Incid in *; simpl in *.
 generalize H2 H0 H3 H1; clear H2 H0 H3 H1.
-case_eq o1; case_eq o0; case_eq o; try (solve[intros;subst;intuition | intros;subst;fourier]).
-intros r3 Hr3 r4 Hr4 r5 Hr5; repeat elim R_eq_dec; try (solve [intros;subst;intuition | intros;subst;fourier]).
+case_eq o1; case_eq o0; case_eq o; try (solve[intros;subst;intuition | intros;subst;lra]).
+intros r3 Hr3 r4 Hr4 r5 Hr5; repeat elim R_eq_dec; try (solve [intros;subst;intuition | intros;subst;lra]).
 intros; subst; left; auto.
 
 intros; subst.
 unfold Incid in *; simpl in *.
 generalize H2 H0 H3 H1; clear H2 H0 H3 H1.
-case_eq o1; case_eq o0; case_eq o; try (solve[intros;subst;intuition | intros;subst;fourier]).
-intros r3 Hr3 r4 Hr4 r5 Hr5; repeat elim R_eq_dec; try (solve [intros;subst;intuition | intros;subst;fourier]).
+case_eq o1; case_eq o0; case_eq o; try (solve[intros;subst;intuition | intros;subst;lra]).
+intros r3 Hr3 r4 Hr4 r5 Hr5; repeat elim R_eq_dec; try (solve [intros;subst;intuition | intros;subst;lra]).
 
 subst;
 generalize H2 H0 H3 H1; clear H2 H0 H3 H1;
@@ -1271,7 +1272,7 @@ Lemma foo :
 forall m b : R,
 4 = m * -3 + b -> 8 = m * -35 + b -> 38 = 12 * m + 11 * b -> False.
 Proof.
-intros; fourier.
+intros; lra.
 Qed.
 
 Lemma non_desarguesian : 
@@ -1316,44 +1317,40 @@ exists (L (Some 1) 7). (* line B'C' *)
 
 split.
 unfold on_line; simpl; 
-repeat (elim R_pos_neg; intros; try fourier); 
+repeat (elim R_pos_neg; intros; try lra); 
 repeat split; try field.
 split.
 unfold on_line; simpl; 
-repeat (elim R_pos_neg; intros; try fourier); 
+repeat (elim R_pos_neg; intros; try lra); 
 repeat split; try field.
 split.
 unfold on_line; simpl; 
-repeat (elim R_pos_neg; intros; try fourier); 
+repeat (elim R_pos_neg; intros; try lra); 
 repeat split; try field.
 split.
 (* perspective *)
 unfold on_line; simpl; 
-repeat (elim R_pos_neg; intros; try fourier); 
+repeat (elim R_pos_neg; intros; try lra); 
 repeat split; try field.
 split.
 unfold non_collinear.
 intros l; case l.
 intros o; case o.
 intros m b; unfold on_line; simpl.
-repeat (elim R_pos_neg; intros; try fourier).
-intro; intuition; fourier.
-intro; intuition; fourier.
+repeat (elim R_pos_neg; intros; try lra).
 intros r; unfold on_line; simpl.
-repeat (elim R_pos_neg; intros; try fourier).
-intro; intuition; fourier.
+repeat (elim R_pos_neg; intros; try lra).
+intro; intuition; lra.
 unfold on_line; simpl;intuition.
 split.
 unfold non_collinear.
 intros l; case l.
 intros o; case o.
 intros m b; unfold on_line; simpl.
-repeat (elim R_pos_neg; intros; try fourier).
-intro; intuition; fourier.
-intro; intuition; fourier.
+repeat (elim R_pos_neg; intros; try lra).
 intros r; unfold on_line; simpl.
-repeat (elim R_pos_neg; intros; try fourier).
-intro; intuition; fourier.
+repeat (elim R_pos_neg; intros; try lra).
+intro; intuition; lra.
 unfold on_line; simpl;intuition.
 split.
 left; intro H; inversion H.
@@ -1368,18 +1365,9 @@ unfold non_collinear.
 intros l; case l.
 intros o; case o.
 intros m b; unfold on_line; simpl.
-repeat (elim R_pos_neg; intros; try fourier).
-intro; intuition.
-assert ((38 /11) *11= ((2 * m * (6 /11))+b)*11).
-apply (f_equal2).
-assumption.
-field.
-replace ((38/11)*11) with 38 in H1 by field.
-replace (((2*m*(6/11))+b)*11) with (12*m + 11*b) in H1 by field.
-apply (foo m b); auto. (*fourier actually.*)
-intros; intuition; fourier.
+repeat (elim R_pos_neg; intros; try lra).
 intros r; unfold on_line; simpl.
-intro; intuition; fourier.
+intro; intuition; lra.
 unfold on_line; simpl;intuition.
 Qed.
 

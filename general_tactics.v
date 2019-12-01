@@ -68,6 +68,6 @@ Definition dist6 (S:Set) (A B C D E F : S) :=
   D<>E /\ D<>F /\
   E<>F.
 
-Implicit Arguments dist3.
-Implicit Arguments dist4.
-Implicit Arguments dist6.
+Arguments dist3 : default implicits.
+Arguments dist4 : default implicits.
+Arguments dist6 : default implicits.
